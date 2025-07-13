@@ -1,0 +1,48 @@
+<!-- Header: Logo left (clickable), nav links right, same line -->
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0;">
+  <div style="display: flex; align-items: center;">
+    <a href="/user-home"><img src="assets/wecare-logo.jpg" alt="WeCare Logo" style="height: 48px; margin-right: 8px; cursor: pointer;" onerror="this.style.display='none'"></a>
+  </div>
+  <div>
+    <a href="/user-profile">View Profile</a> |
+    <a href="/myappointments">My Appointments</a> |
+    <a href="/user-home">View Coaches</a> |
+    <a href="/feedback">Feedback</a> |
+    <a href="/contact-us">Contact Us</a> |
+    <a href="/">Logout</a>
+  </div>
+</div>
+<hr style="margin: 0 0 24px 0; border: none; border-top: 1.5px solid #ccc;" />
+
+<h2 style="text-align: center; font-weight: 500; margin-bottom: 24px;">Coach Details</h2>
+
+<!-- Scrollable table container -->
+<div style="overflow-x: auto; width: 100%;">
+  <table style="width: 100%; min-width: 800px; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>Coach Profile Image</th>
+        <th>Coach Name</th>
+        <th>Coach Id</th>
+        <th>Phone Number</th>
+        <th>Specialty</th>
+        <th>Book Appointment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let coach of coaches" (click)="onCoachClick(coach)" style="cursor: pointer;">
+        <td style="text-align: center;"><img [src]="getProfileImage(coach.gender)" alt="Profile" style="height: 64px; width: 64px; border-radius: 50%;" /></td>
+        <td>{{ coach.name }}</td>
+        <td>{{ coach.id }}</td>
+        <td>{{ coach.phone }}</td>
+        <td>{{ coach.specialty }}</td>
+        <td><button (click)="$event.stopPropagation(); bookAppointment()">Book</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Copyright fixed to bottom -->
+<div style="position: fixed; left: 0; bottom: 0; width: 100%; text-align: center; color: #888; font-size: 0.95rem; background: #fff; padding: 8px 0; border-top: 1px solid #eee; z-index: 100;">
+  Copyright©2022 WeCare. All rights reserved.
+</div>

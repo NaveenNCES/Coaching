@@ -1,0 +1,39 @@
+<!-- Header: Logo left (clickable), nav links right, same line -->
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0;">
+  <div style="display: flex; align-items: center;">
+    <a href="/user-home"><img src="assets/wecare-logo.jpg" alt="WeCare Logo" style="height: 48px; margin-right: 8px; cursor: pointer;" onerror="this.style.display='none'"></a>
+  </div>
+  <div>
+    <a href="/user-profile">View Profile</a> |
+    <a href="/myappointments">My Appointments</a> |
+    <a href="/user-home">View Coaches</a> |
+    <a href="/feedback">Feedback</a> |
+    <a href="/contact-us">Contact Us</a> |
+    <a href="/">Logout</a>
+  </div>
+</div>
+<hr style="margin: 0 0 24px 0; border: none; border-top: 1.5px solid #ccc;" />
+
+<!-- Centered profile box -->
+<div style="display: flex; justify-content: center; align-items: flex-start; min-height: 60vh;">
+  <div style="border: 1px solid #ccc; border-radius: 8px; padding: 32px 32px 16px 32px; min-width: 350px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <img [src]="getProfileImage(coach.gender)" alt="Profile" style="height: 120px; width: 120px; border-radius: 50%; margin-bottom: 16px;" />
+    </div>
+    <div style="margin-bottom: 16px;">
+      <div><b>User Name :</b> {{ coach.name }}</div>
+      <div><b>User Id :</b> {{ coach.id }}</div>
+      <div><b>Date of Birth :</b> {{ coach.dob || 'Jan 01 1994' }}</div>
+      <div><b>Email Id :</b> {{ coach.email || 'david@gmail.com' }}</div>
+      <div><b>Phone Number :</b> {{ coach.phone }}</div>
+      <div><b>Address :</b> {{ coach.address || 'Sydney' }}</div>
+      <div><b>Pincode :</b> {{ coach.pincode || '2121' }}</div>
+    </div>
+    <button (click)="goBack()">Go Back</button>
+  </div>
+</div>
+
+<!-- Copyright fixed to bottom -->
+<div style="position: fixed; left: 0; bottom: 0; width: 100%; text-align: center; color: #888; font-size: 0.95rem; background: #fff; padding: 8px 0; border-top: 1px solid #eee; z-index: 100;">
+  Copyright©2022 WeCare. All rights reserved.
+</div>

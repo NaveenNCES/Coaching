@@ -1,0 +1,22 @@
+<!-- Header: Logo left (clickable), nav links right, same line -->
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0;">
+  <div style="display: flex; align-items: center;">
+    <a href="/user-home"><img src="assets/wecare-logo.jpg" alt="WeCare Logo" style="height: 48px; margin-right: 8px; cursor: pointer;" onerror="this.style.display='none'"></a>
+  </div>
+  <div>
+    <a href="/user-profile">View Profile</a> |
+    <a href="/myappointments">My Appointments</a> |
+    <a href="/user-home">View Coaches</a> |
+    <a href="/feedback">Feedback</a> |
+    <a href="/contact-us">Contact Us</a> |
+    <a href="/">Logout</a>
+  </div>
+</div>
+<hr style="margin: 0 0 24px 0; border: none; border-top: 1.5px solid #ccc;" />
+
+<div style="margin: 40px 0 0 24px;">
+  <span style="font-size: 1.3rem; font-weight: 500;">Are you sure you want to cancel the appointment ?</span>
+  <br /><br />
+  <button (click)="confirmCancel()">YES</button>
+  <button (click)="goBack()" style="margin-left: 8px;">NO</button>
+</div>

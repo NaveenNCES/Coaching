@@ -1,0 +1,80 @@
+<!-- Header: Logo left (clickable), nav links right, same line -->
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0;">
+  <div style="display: flex; align-items: center;">
+    <a href="/user-home"><img src="assets/wecare-logo.jpg" alt="WeCare Logo" style="height: 48px; margin-right: 8px; cursor: pointer;" onerror="this.style.display='none'"></a>
+  </div>
+  <div>
+    <a href="/user-profile">View Profile</a> |
+    <a href="/myappointments">My Appointments</a> |
+    <a href="/user-home">View Coaches</a> |
+    <a href="/feedback">Feedback</a> |
+    <a href="/contact-us">Contact Us</a> |
+    <a href="/">Logout</a>
+  </div>
+</div>
+<hr style="margin: 0 0 24px 0; border: none; border-top: 1.5px solid #ccc;" />
+
+<!-- Feedback form, left-aligned, no box -->
+<div style="display: flex; justify-content: flex-start; align-items: flex-start; min-height: 60vh; margin-left: 40px;">
+  <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" style="min-width: 400px;">
+    <h2 style="margin-top: 0; text-align: left;">Feedback Form</h2>
+    <div style="margin-bottom: 12px;">
+      <label><b>Name</b></label><br />
+      <input type="text" formControlName="name" placeholder="" style="width: 100%; padding: 4px;" />
+      <div *ngIf="feedbackForm.get('name')?.touched && feedbackForm.get('name')?.invalid" style="color: #d32f2f; font-size: 0.9rem;">
+        Name is required (3-50 characters).
+      </div>
+    </div>
+    <div style="margin-bottom: 12px;">
+      <label><b>Email</b></label><br />
+      <input type="email" formControlName="email" placeholder="Ex: david@gmail.com" style="width: 100%; padding: 4px;" />
+      <div *ngIf="feedbackForm.get('email')?.touched && feedbackForm.get('email')?.invalid" style="color: #d32f2f; font-size: 0.9rem;">
+        Valid email is required.
+      </div>
+    </div>
+    <div style="margin-bottom: 12px; display: flex; gap: 8px; align-items: flex-end;">
+      <div style="flex: 1;">
+        <label><b>Phone Number</b></label><br />
+        <select formControlName="countryCode" style="width: 100px; padding: 4px;">
+          <option value="" disabled selected>Code</option>
+          <option *ngFor="let code of countryCodes" [value]="code">{{ code }}</option>
+        </select>
+      </div>
+      <div style="flex: 2;">
+        <input type="number" formControlName="phone" placeholder="Ex: 8347652342" style="width: 100%; padding: 4px;" />
+      </div>
+    </div>
+    <div style="margin-bottom: 12px;">
+      <div *ngIf="feedbackForm.get('countryCode')?.touched && feedbackForm.get('countryCode')?.invalid" style="color: #d32f2f; font-size: 0.9rem;">Country code required.</div>
+      <div *ngIf="feedbackForm.get('phone')?.touched && feedbackForm.get('phone')?.invalid" style="color: #d32f2f; font-size: 0.9rem;">10 digit phone number required.</div>
+    </div>
+    <div style="margin-bottom: 12px;">
+      <label><b>Feedback Category</b></label><br />
+      <input list="categories" formControlName="category" placeholder="" style="width: 100%; padding: 4px;" />
+      <datalist id="categories">
+        <option *ngFor="let cat of categories" [value]="cat"></option>
+      </datalist>
+      <div *ngIf="feedbackForm.get('category')?.touched && feedbackForm.get('category')?.invalid" style="color: #d32f2f; font-size: 0.9rem;">Required</div>
+    </div>
+    <div style="margin-bottom: 12px;">
+      <label><b>How do you rate your overall Experience?</b></label><br />
+      <label style="margin-right: 12px;"><input type="radio" formControlName="experience" value="Poor" /> Poor</label>
+      <label style="margin-right: 12px;"><input type="radio" formControlName="experience" value="Average" /> Average</label>
+      <label style="margin-right: 12px;"><input type="radio" formControlName="experience" value="Good" /> Good</label>
+      <label style="margin-right: 12px;"><input type="radio" formControlName="experience" value="Very Good" /> Very Good</label>
+      <div *ngIf="feedbackForm.get('experience')?.touched && feedbackForm.get('experience')?.invalid" style="color: #d32f2f; font-size: 0.9rem;">Required</div>
+    </div>
+    <div style="margin-bottom: 12px;">
+      <label><b>Feedback</b></label><br />
+      <textarea formControlName="feedback" rows="3" maxlength="50" style="width: 100%; padding: 4px;"></textarea>
+      <div *ngIf="feedbackForm.get('feedback')?.touched && feedbackForm.get('feedback')?.invalid" style="color: #d32f2f; font-size: 0.9rem;">Required, max 50 characters.</div>
+    </div>
+    <button type="submit" style="margin-right: 8px;">Submit</button>
+    <button type="reset" (click)="feedbackForm.reset()">Reset</button>
+  </form>
+</div>
+
+<!-- Copyright fixed to bottom -->
+<div style="position: fixed; left: 0; bottom: 0; width: 100%; text-align: center; color: #888; font-size: 0.95rem; background: #fff; padding: 8px 0; border-top: 1px solid #eee; z-index: 100;">
+  Copyright©2022 WeCare. All rights reserved.
+</div>

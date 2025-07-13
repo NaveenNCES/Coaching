@@ -1,0 +1,42 @@
+# Angular build output
+/dist/
+/tmp/
+/out-tsc/
+
+# Node modules
+/node_modules/
+
+# IDE and editor folders
+/.idea/
+/.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Compiled output
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+
+# Coverage reports
+/coverage/
+
+# Misc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Angular specific
+/src/environments/environment*.ts
+
+# Optional: OS generated files
+*.sublime-workspace
+*.sublime-project
+
+# End of .gitignore

@@ -1,0 +1,26 @@
+<!-- Header: Logo left (clickable), nav links right, same line -->
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0;">
+  <div style="display: flex; align-items: center;">
+    <a href="/user-home"><img src="assets/wecare-logo.jpg" alt="WeCare Logo" style="height: 48px; margin-right: 8px; cursor: pointer;" onerror="this.style.display='none'"></a>
+  </div>
+  <div>
+    <a href="/user-profile">View Profile</a> |
+    <a href="/myappointments">My Appointments</a> |
+    <a href="/user-home">View Coaches</a> |
+    <a href="/feedback">Feedback</a> |
+    <a href="/contact-us">Contact Us</a> |
+    <a href="/">Logout</a>
+  </div>
+</div>
+<hr style="margin: 0 0 24px 0; border: none; border-top: 1.5px solid #ccc;" />
+
+<div style="margin: 40px 0 0 24px;">
+  <span style="font-size: 1.1rem; font-weight: 500;">Your appointment is cancelled successfully</span>
+  <br /><br />
+  <button (click)="goBack()">Go Back</button>
+</div>
+
+<!-- Copyright fixed to bottom -->
+<div style="position: fixed; left: 0; bottom: 0; width: 100%; text-align: center; color: #888; font-size: 0.95rem; background: #fff; padding: 8px 0; border-top: 1px solid #eee; z-index: 100;">
+  Copyright©2022 WeCare. All rights reserved.
+</div>

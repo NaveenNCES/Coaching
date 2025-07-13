@@ -1,0 +1,51 @@
+<!-- Header: Logo left, nav links right, same line -->
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0;">
+  <div style="display: flex; align-items: center;">
+    <img src="assets/wecare-logo.jpg" alt="WeCare Logo" style="height: 48px; margin-right: 8px;" onerror="this.style.display='none'">
+    <span style="font-size: 1.3rem; font-weight: bold;">WeCare</span>
+  </div>
+  <div>
+    <a href="/user-profile">View Profile</a> |
+    <a href="/myappointments">My Appointments</a> |
+    <a href="/user-home">View Coaches</a> |
+    <a href="/feedback">Feedback</a> |
+    <a href="/contact-us">Contact Us</a> |
+    <a href="/">Logout</a>
+  </div>
+</div>
+<hr style="margin: 0 0 24px 0; border: none; border-top: 1.5px solid #ccc;" />
+
+<!-- Centered schedule box -->
+<div style="display: flex; justify-content: center; align-items: flex-start; min-height: 60vh;">
+  <div style="border: 1px solid #ccc; border-radius: 8px; padding: 32px 32px 16px 32px; min-width: 400px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+    <div style="display: flex; align-items: center; margin-bottom: 16px;">
+      <img src="assets/schedule.png" alt="Schedule Icon" style="height: 32px; margin-right: 12px;" onerror="this.style.display='none'">
+      <span style="font-size: 1.1rem; font-weight: 500;">Proceed with your Appointment</span>
+    </div>
+    <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+      <div style="margin-bottom: 16px;">
+        <label for="date"><b>Date of Appointment</b></label><br />
+        <input id="date" type="date" formControlName="date" style="margin-top: 4px; padding: 4px;" />
+        <div *ngIf="scheduleForm.get('date')?.touched && scheduleForm.get('date')?.invalid" style="color: #d32f2f; font-size: 0.9rem;">Date is required.</div>
+      </div>
+      <div style="margin-bottom: 16px;">
+        <b>Preferred Slot</b><br />
+        <div style="display: flex; flex-wrap: wrap; gap: 16px 24px; margin-top: 4px;">
+          <ng-container *ngFor="let slot of slots; let i = index">
+            <label style="margin-right: 16px;">
+              <input type="radio" formControlName="slot" [value]="slot" /> {{ slot }}
+            </label>
+            <ng-container *ngIf="i === 2"><br /></ng-container>
+          </ng-container>
+        </div>
+        <div *ngIf="scheduleForm.get('slot')?.touched && scheduleForm.get('slot')?.invalid" style="color: #d32f2f; font-size: 0.9rem;">Slot is required.</div>
+      </div>
+      <button type="submit" style="margin-top: 8px;">Confirm Appointment</button>
+    </form>
+  </div>
+</div>
+
+<!-- Copyright fixed to bottom -->
+<div style="position: fixed; left: 0; bottom: 0; width: 100%; text-align: center; color: #888; font-size: 0.95rem; background: #fff; padding: 8px 0; border-top: 1px solid #eee; z-index: 100;">
+  Copyright©2022 WeCare. All rights reserved.
+</div>

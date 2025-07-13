@@ -1,0 +1,40 @@
+<!-- Header: Logo left (clickable), nav links right, same line -->
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0;">
+  <div style="display: flex; align-items: center;">
+    <a href="/user-home"><img src="assets/wecare-logo.jpg" alt="WeCare Logo" style="height: 48px; margin-right: 8px; cursor: pointer;" onerror="this.style.display='none'"></a>
+  </div>
+  <div>
+    <a href="/user-profile">View Profile</a> |
+    <a href="/myappointments">My Appointments</a> |
+    <a href="/user-home">View Coaches</a> |
+    <a href="/feedback">Feedback</a> |
+    <a href="/contact-us">Contact Us</a> |
+    <a href="/">Logout</a>
+  </div>
+</div>
+<hr style="margin: 0 0 24px 0; border: none; border-top: 1.5px solid #ccc;" />
+
+<!-- Centered appointment box -->
+<div style="display: flex; justify-content: center; align-items: flex-start; min-height: 60vh;">
+  <div style="border: 1px solid #ccc; border-radius: 8px; padding: 32px 32px 16px 32px; min-width: 350px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+    <h2 style="margin-top: 0;">My Appointments</h2>
+    <div style="margin-bottom: 16px;">
+      <div><b>Booking Id :</b> {{ appointment.bookingId }}</div>
+      <div><b>Coach Id :</b> {{ appointment.coachId }}</div>
+      <div><b>Coach Name :</b> {{ appointment.coachName }}</div>
+      <div><b>User Id :</b> {{ appointment.userId }}</div>
+      <div><b>User Name :</b> {{ appointment.userName }}</div>
+      <div><b>Date :</b> {{ appointment.date }}</div>
+      <div><b>Slot :</b> {{ appointment.slot }}</div>
+    </div>
+    <button (click)="reschedule()">Reschedule</button>
+    <button (click)="cancel()" style="margin-left: 8px;">Cancel</button>
+    <br /><br />
+    <button (click)="goBack()">Go Back</button>
+  </div>
+</div>
+
+<!-- Copyright fixed to bottom -->
+<div style="position: fixed; left: 0; bottom: 0; width: 100%; text-align: center; color: #888; font-size: 0.95rem; background: #fff; padding: 8px 0; border-top: 1px solid #eee; z-index: 100;">
+  Copyright©2022 WeCare. All rights reserved.
+</div>

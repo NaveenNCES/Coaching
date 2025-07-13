@@ -1,0 +1,35 @@
+import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { LoginUserComponent } from './login-user/login-user.component';
+import { UserHomeComponent } from './user-home/user-home.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MyappointmentsComponent } from './myappointments/myappointments.component';
+import { ScheduleComponent } from './schedule/schedule.component';
+import { ScheduleSuccessComponent } from './schedule-success/schedule-success.component';
+import { RescheduleComponent } from './reschedule/reschedule.component';
+import { RescheduleSuccessComponent } from './reschedule-success/reschedule-success.component';
+import { CancelComponent } from './cancel/cancel.component';
+import { CancelSuccessComponent } from './cancel-success/cancel-success.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { FeedbackSuccessComponent } from './feedback-success/feedback-success.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { LandingComponent } from './landing/landing.component';
+
+export const routes: Routes = [
+  { path: '', component: LandingComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginUserComponent },
+  { path: 'login-user-form', component: LoginUserComponent },
+  { path: 'user-home', component: UserHomeComponent },
+  { path: 'user-profile', component: UserProfileComponent },
+  { path: 'myappointments', component: MyappointmentsComponent },
+  { path: 'schedule', component: ScheduleComponent },
+  { path: 'schedule-success', component: ScheduleSuccessComponent },
+  { path: 'reschedule', component: RescheduleComponent },
+  { path: 'reschedule-success', component: RescheduleSuccessComponent },
+  { path: 'cancel', component: CancelComponent },
+  { path: 'cancel-success', component: CancelSuccessComponent },
+  { path: 'feedback', component: FeedbackComponent },
+  { path: 'feedback-success', component: FeedbackSuccessComponent },
+  { path: 'contact-us', component: ContactUsComponent },
+];
