@@ -19,7 +19,7 @@ export class FeedbackComponent {
     'Overweight Issues',
     'Hypertension Issues'
   ];
-  experiences = ['Good', 'Average', 'Bad'];
+  experiences = ['Poor', 'Average', 'Good', 'Very Good'];
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.feedbackForm = this.fb.group({

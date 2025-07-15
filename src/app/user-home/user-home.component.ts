@@ -1,26 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
-
-interface Coach {
-  id: string;
-  name: string;
-  phone: string;
-  specialty: string;
-  gender: 'male' | 'female';
-}
-
-// Dummy service to simulate API call
-class CoachService {
-  getCoaches(): Observable<Coach[]> {
-    return of([
-      { id: 'CI-0001', name: 'Rose', phone: '+44 1234567890', specialty: 'Confidence Issues', gender: 'female' },
-      { id: 'CI-0002', name: 'John', phone: '+61 1234567891', specialty: 'Depression Issues', gender: 'male' },
-      { id: 'CI-0003', name: 'Mary', phone: '+852 1234567890', specialty: 'Depression Issues', gender: 'female' },
-    ]);
-  }
-}
+import { CoachService } from '../services/coach.service';
+import { Coach } from '../services/api.interfaces';
 
 @Component({
   selector: 'app-user-home',
@@ -31,13 +14,33 @@ class CoachService {
 })
 export class UserHomeComponent implements OnInit {
   coaches: Coach[] = [];
-  coachService = new CoachService();
+  loading: boolean = false;
+  error: string = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private coachService: CoachService
+  ) {}
 
   ngOnInit() {
-    this.coachService.getCoaches().subscribe(data => {
-      this.coaches = data;
+    this.loadCoaches();
+  }
+
+  loadCoaches() {
+    this.loading = true;
+    this.error = '';
+    
+    this.coachService.getCoaches().subscribe({
+      next: (data) => {
+        this.coaches = data || [];
+        this.loading = false;
+        console.log('Coaches loaded successfully:', data);
+      },
+      error: (error) => {
+        this.error = 'Failed to load coaches. Please try again later.';
+        this.loading = false;
+        console.error('Error loading coaches:', error);
+      }
     });
   }
 
@@ -51,5 +54,9 @@ export class UserHomeComponent implements OnInit {
 
   onCoachClick(coach: Coach) {
     this.router.navigate(['/user-profile'], { state: { coach } });
+  }
+
+  retryLoad() {
+    this.loadCoaches();
   }
 }

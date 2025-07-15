@@ -1,48 +1,122 @@
-<!-- Header: Logo left (clickable), nav links right, same line -->
-<div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0;">
-  <div style="display: flex; align-items: center;">
-    <a href="/user-home"><img src="assets/wecare-logo.jpg" alt="WeCare Logo" style="height: 48px; margin-right: 8px; cursor: pointer;" onerror="this.style.display='none'"></a>
+<!-- Main Container with Scrollable Content -->
+<div style="height: 100vh; display: flex; flex-direction: column; overflow: hidden;">
+  
+  <!-- Fixed Header -->
+  <div style="flex-shrink: 0; background: #fff; border-bottom: 1px solid #eee; z-index: 10;">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0;">
+      <div style="display: flex; align-items: center;">
+        <a href="/user-home"><img src="assets/wecare-logo.jpg" alt="WeCare Logo" style="height: 48px; margin-right: 8px; cursor: pointer;" onerror="this.style.display='none'"></a>
+      </div>
+      <div>
+        <a href="/user-profile">View Profile</a> |
+        <a href="/myappointments">My Appointments</a> |
+        <a href="/user-home">View Coaches</a> |
+        <a href="/feedback">Feedback</a> |
+        <a href="/contact-us">Contact Us</a> |
+        <a href="/">Logout</a>
+      </div>
+    </div>
+    <hr style="margin: 0 0 24px 0; border: none; border-top: 1.5px solid #ccc;" />
   </div>
-  <div>
-    <a href="/user-profile">View Profile</a> |
-    <a href="/myappointments">My Appointments</a> |
-    <a href="/user-home">View Coaches</a> |
-    <a href="/feedback">Feedback</a> |
-    <a href="/contact-us">Contact Us</a> |
-    <a href="/">Logout</a>
+
+  <!-- Scrollable Content Area -->
+  <div style="flex: 1; overflow-y: auto; padding: 0 16px;">
+    
+    <h2 style="text-align: center; font-weight: 500; margin: 24px 0;">Coach Details</h2>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" style="text-align: center; padding: 40px;">
+      <div style="font-size: 1.2rem; color: #666; margin-bottom: 16px;">Loading coaches...</div>
+      <div style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #5a3e85; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" style="text-align: center; padding: 40px;">
+      <div style="color: #d32f2f; margin-bottom: 16px; font-size: 1.1rem;">{{ error }}</div>
+      <button (click)="retryLoad()" style="padding: 8px 24px; background: #5a3e85; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Retry</button>
+    </div>
+
+    <!-- Coaches Table with Scrollable Container -->
+    <div *ngIf="!loading && !error && coaches.length > 0" style="margin-bottom: 80px;">
+      <div style="overflow-x: auto; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <table style="width: 100%; min-width: 800px; border-collapse: collapse; background: #fff;">
+          <thead style="background: #f8f9fa; position: sticky; top: 0; z-index: 5;">
+            <tr>
+              <th style="padding: 16px 12px; text-align: center; border-bottom: 2px solid #dee2e6; font-weight: 600; color: #495057;">Coach Profile Image</th>
+              <th style="padding: 16px 12px; text-align: center; border-bottom: 2px solid #dee2e6; font-weight: 600; color: #495057;">Coach Name</th>
+              <th style="padding: 16px 12px; text-align: center; border-bottom: 2px solid #dee2e6; font-weight: 600; color: #495057;">Coach Id</th>
+              <th style="padding: 16px 12px; text-align: center; border-bottom: 2px solid #dee2e6; font-weight: 600; color: #495057;">Phone Number</th>
+              <th style="padding: 16px 12px; text-align: center; border-bottom: 2px solid #dee2e6; font-weight: 600; color: #495057;">Specialty</th>
+              <th style="padding: 16px 12px; text-align: center; border-bottom: 2px solid #dee2e6; font-weight: 600; color: #495057;">Book Appointment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let coach of coaches; let i = index" 
+                (click)="onCoachClick(coach)" 
+                style="cursor: pointer; transition: background-color 0.2s;"
+                [style.background-color]="i % 2 === 0 ? '#fff' : '#f8f9fa'"
+                onmouseover="this.style.backgroundColor='#e3f2fd'"
+                onmouseout="this.style.backgroundColor = this.dataset.originalColor || (this.rowIndex % 2 === 0 ? '#fff' : '#f8f9fa')"
+                [attr.data-original-color]="i % 2 === 0 ? '#fff' : '#f8f9fa'">
+              <td style="text-align: center; padding: 12px;">
+                <img [src]="getProfileImage(coach.gender)" alt="Profile" style="height: 64px; width: 64px; border-radius: 50%; border: 2px solid #e0e0e0;" />
+              </td>
+              <td style="text-align: center; padding: 12px; font-weight: 500;">{{ coach.name }}</td>
+              <td style="text-align: center; padding: 12px; color: #666;">{{ coach.id }}</td>
+              <td style="text-align: center; padding: 12px;">{{ coach.phone }}</td>
+              <td style="text-align: center; padding: 12px; color: #5a3e85; font-weight: 500;">{{ coach.specialty }}</td>
+              <td style="text-align: center; padding: 12px;">
+                <button (click)="$event.stopPropagation(); bookAppointment()" 
+                        style="padding: 8px 16px; background: #5a3e85; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.2s;"
+                        onmouseover="this.style.backgroundColor='#4a2c6b'"
+                        onmouseout="this.style.backgroundColor='#5a3e85'">
+                  Book
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- No Coaches State -->
+    <div *ngIf="!loading && !error && coaches.length === 0" style="text-align: center; padding: 40px;">
+      <div style="color: #666; font-size: 1.1rem;">No coaches available at the moment.</div>
+    </div>
+
   </div>
-</div>
-<hr style="margin: 0 0 24px 0; border: none; border-top: 1.5px solid #ccc;" />
 
-<h2 style="text-align: center; font-weight: 500; margin-bottom: 24px;">Coach Details</h2>
+  <!-- Fixed Footer -->
+  <div style="flex-shrink: 0; background: #fff; border-top: 1px solid #eee; z-index: 10;">
+    <div style="text-align: center; color: #888; font-size: 0.95rem; padding: 8px 0;">
+      Copyright©2022 WeCare. All rights reserved.
+    </div>
+  </div>
 
-<!-- Scrollable table container -->
-<div style="overflow-x: auto; width: 100%;">
-  <table style="width: 100%; min-width: 800px; border-collapse: collapse;">
-    <thead>
-      <tr>
-        <th>Coach Profile Image</th>
-        <th>Coach Name</th>
-        <th>Coach Id</th>
-        <th>Phone Number</th>
-        <th>Specialty</th>
-        <th>Book Appointment</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let coach of coaches" (click)="onCoachClick(coach)" style="cursor: pointer;">
-        <td style="text-align: center;"><img [src]="getProfileImage(coach.gender)" alt="Profile" style="height: 64px; width: 64px; border-radius: 50%;" /></td>
-        <td>{{ coach.name }}</td>
-        <td>{{ coach.id }}</td>
-        <td>{{ coach.phone }}</td>
-        <td>{{ coach.specialty }}</td>
-        <td><button (click)="$event.stopPropagation(); bookAppointment()">Book</button></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
 
-<!-- Copyright fixed to bottom -->
-<div style="position: fixed; left: 0; bottom: 0; width: 100%; text-align: center; color: #888; font-size: 0.95rem; background: #fff; padding: 8px 0; border-top: 1px solid #eee; z-index: 100;">
-  Copyright©2022 WeCare. All rights reserved.
-</div>
+<style>
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Custom scrollbar for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+</style>

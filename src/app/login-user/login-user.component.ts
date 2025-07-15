@@ -22,11 +22,15 @@ export class LoginUserComponent {
   }
 
   onSubmit() {
-    const password = this.loginForm.get('password')?.value;
-    if (password === 'user@123') {
-      this.router.navigate(['/user-home']);
+    if (this.loginForm.valid) {
+      const password = this.loginForm.get('password')?.value;
+      if (password === 'user@123') {
+        this.router.navigate(['/user-home']);
+      } else {
+        this.loginError = 'Invalid password. Please try again.';
+      }
     } else {
-      this.loginError = 'Invalid password. Please try again.';
+      this.loginForm.markAllAsTouched();
     }
   }
 }
